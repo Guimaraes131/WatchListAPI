@@ -49,4 +49,8 @@ public class MediaService {
 
         return repository.findAll(mediaExample);
     }
+
+    public void update(Media media) {
+        repository.save(media);
+    }
 }
