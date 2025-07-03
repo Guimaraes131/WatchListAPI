@@ -5,12 +5,7 @@ CREATE TABLE media (
 	release_year NUMERIC(4) NOT NULL,
 	duration NUMERIC(4) NOT NULL,
 	watched BOOLEAN,
-	id_genre uuid not null references genre(id),
-	constraint chk_media_type check (media_type in ('MOVIE', 'TV_SHOW'))
-)
-
-CREATE TABLE genre (
-	id UUID PRIMARY KEY,
-	name VARCHAR(100) UNIQUE
+	genre VARCHAR(20) NOT NULL,
+	constraint chk_media_type check (media_type in ('MOVIE', 'TV_SHOW')),
+	constraint chk_genre check (genre in ('ROMANCE', 'ACTION', 'HORROR', 'DRAMA', 'THRILLER', 'FANTASY'))
 );
-
