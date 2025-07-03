@@ -3,7 +3,9 @@ package io.github.Guimaraes131.watchlistapi.controller;
 import io.github.Guimaraes131.watchlistapi.controller.dto.GetMediaDTO;
 import io.github.Guimaraes131.watchlistapi.controller.dto.PostMediaDTO;
 import io.github.Guimaraes131.watchlistapi.controller.mappers.MediaMapper;
+import io.github.Guimaraes131.watchlistapi.model.Genre;
 import io.github.Guimaraes131.watchlistapi.model.Media;
+import io.github.Guimaraes131.watchlistapi.model.MediaType;
 import io.github.Guimaraes131.watchlistapi.service.MediaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -53,5 +56,22 @@ public class MediaController {
         service.destroy(uuid);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<GetMediaDTO>> index(
+            @RequestParam(required = false, value = "mediaType") MediaType mediaType,
+            @RequestParam(required = false, value = "genre") Genre genre,
+            @RequestParam(required = false, value = "watched") Boolean watched,
+            @RequestParam(required = false, value = "releaseYear") Integer releaseYear
+    ) {
+
+        List<Media> mediaList = service.index(mediaType, genre, watched, releaseYear);
+
+        List<GetMediaDTO> dtos = mediaList.stream()
+                .map(mapper::toDTO)
+                .toList();
+
+        return ResponseEntity.ok(dtos);
     }
 }
