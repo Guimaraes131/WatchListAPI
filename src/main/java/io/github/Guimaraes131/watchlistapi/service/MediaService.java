@@ -21,4 +21,8 @@ public class MediaService {
     public Optional<Media> get(UUID id) {
         return repository.findById(id);
     }
+
+    public void destroy(UUID id) {
+        repository.deleteById(id);
+    }
 }

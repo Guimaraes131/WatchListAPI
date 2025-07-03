@@ -46,4 +46,12 @@ public class MediaController {
                     return ResponseEntity.ok(dto);
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> destroy(@PathVariable String id) {
+        UUID uuid = UUID.fromString(id);
+        service.destroy(uuid);
+
+        return ResponseEntity.noContent().build();
+    }
 }
