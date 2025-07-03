@@ -1,0 +1,16 @@
+CREATE TABLE media (
+	id UUID NOT NULL PRIMARY KEY,
+	title VARCHAR(100) NOT NULL,
+	media_type VARCHAR(7) NOT NULL,
+	release_year NUMERIC(4) NOT NULL,
+	duration NUMERIC(4) NOT NULL,
+	watched BOOLEAN,
+	id_genre uuid not null references genre(id),
+	constraint chk_media_type check (media_type in ('MOVIE', 'TV_SHOW'))
+)
+
+CREATE TABLE genre (
+	id UUID PRIMARY KEY,
+	name VARCHAR(100) UNIQUE
+);
+
