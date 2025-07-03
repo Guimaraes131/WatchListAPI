@@ -4,6 +4,7 @@ import io.github.Guimaraes131.watchlistapi.model.Genre;
 import io.github.Guimaraes131.watchlistapi.model.Media;
 import io.github.Guimaraes131.watchlistapi.model.MediaType;
 import io.github.Guimaraes131.watchlistapi.repository.MediaRepository;
+import io.github.Guimaraes131.watchlistapi.validator.MediaValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -18,8 +19,10 @@ import java.util.UUID;
 public class MediaService {
 
     private final MediaRepository repository;
+    private final MediaValidator validator;
 
     public void create(Media media) {
+        validator.validate(media);
         repository.save(media);
     }
 
@@ -51,6 +54,7 @@ public class MediaService {
     }
 
     public void update(Media media) {
+        validator.validate(media);
         repository.save(media);
     }
 }
