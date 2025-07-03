@@ -7,6 +7,7 @@ import io.github.Guimaraes131.watchlistapi.model.Genre;
 import io.github.Guimaraes131.watchlistapi.model.Media;
 import io.github.Guimaraes131.watchlistapi.model.MediaType;
 import io.github.Guimaraes131.watchlistapi.service.MediaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class MediaController {
     private final MediaMapper mapper;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody PostMediaDTO dto) {
+    public ResponseEntity<?> create(@RequestBody @Valid PostMediaDTO dto) {
         Media entity = mapper.toEntity(dto);
         service.create(entity);
 
@@ -76,7 +77,7 @@ public class MediaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody PostMediaDTO dto) {
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody @Valid PostMediaDTO dto) {
         UUID uuid = UUID.fromString(id);
 
         return service.get(uuid)
