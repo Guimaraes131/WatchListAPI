@@ -11,16 +11,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/media")
 @RequiredArgsConstructor
-public class MediaController {
+public class MediaController implements GenericController {
 
     private final MediaService service;
     private final MediaMapper mapper;
@@ -28,15 +26,10 @@ public class MediaController {
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid PostMediaDTO dto) {
         Media entity = mapper.toEntity(dto);
+
         service.create(entity);
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(entity.getId())
-                .toUri();
-
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(generateLocationHeader(entity.getId())).build();
     }
 
     @GetMapping("/{id}")
