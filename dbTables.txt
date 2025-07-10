@@ -1,4 +1,4 @@
-CREATE TABLE media (
+CREATE TABLE tb_media (
 	id UUID NOT NULL PRIMARY KEY,
 	title VARCHAR(100) NOT NULL,
 	media_type VARCHAR(7) NOT NULL,
@@ -6,6 +6,14 @@ CREATE TABLE media (
 	duration NUMERIC(4) NOT NULL,
 	watched BOOLEAN,
 	genre VARCHAR(20) NOT NULL,
+	user_id UUID NOT NULL references tb_user(id)
 	constraint chk_media_type check (media_type in ('MOVIE', 'TV_SHOW')),
 	constraint chk_genre check (genre in ('ROMANCE', 'ACTION', 'HORROR', 'DRAMA', 'THRILLER', 'FANTASY'))
+);
+
+CREATE TABLE tb_user (
+	id UUID NOT NULL PRIMARY KEY,
+	login VARCHAR(20) NOT NULL UNIQUE,
+	password VARCHAR(300) NOT NULL,
+	roles VARCHAR[]
 );
