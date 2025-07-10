@@ -33,4 +33,8 @@ public class Media {
     @Enumerated(EnumType.STRING)
     @Column(name = "genre")
     private Genre genre;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
