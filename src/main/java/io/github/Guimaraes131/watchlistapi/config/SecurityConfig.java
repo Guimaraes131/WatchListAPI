@@ -23,12 +23,15 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/login").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/user/**").permitAll();
                     auth.requestMatchers("/media/**").hasRole("USER");
 
                     auth.anyRequest().authenticated();
                 })
+                .oauth2Login(Customizer.withDefaults())
                 .build();
     }
 
